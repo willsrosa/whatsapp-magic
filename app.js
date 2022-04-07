@@ -15,9 +15,9 @@ const port = 2096;
 
 //sudo openssl genrsa -aes128 -out private.key 2048
 //sudo openssl req -new -days 365 -key private.key -out private.csr
-
+//sudo chmod 700 ~/whatsapp-magic/
     var privateKey = fs.readFileSync('private.key', 'utf8');
-    var certificate = fs.readFileSync('private.crt', 'utf8');
+    var certificate = fs.readFileSync('private.csr', 'utf8');
     var credentials = { key: privateKey, cert: certificate };
 
 const app = express();
