@@ -16,13 +16,13 @@ const port = 2096;
 //sudo openssl genrsa -aes128 -out private.key 2048
 //sudo openssl req -new -days 365 -key private.key -out private.csr
 
-   var privateKey = fs.readFileSync('private.key', 'utf8');
-   var certificate = fs.readFileSync('private.crt', 'utf8');
-   var credentials = { key: privateKey, cert: certificate };
+  //  var privateKey = fs.readFileSync('private.key', 'utf8');
+  //  var certificate = fs.readFileSync('private.crt', 'utf8');
+  //  var credentials = { key: privateKey, cert: certificate };
 
 const app = express();
-const server = https.createServer(credentials, app);
-//const server = http.createServer(app);
+//const server = https.createServer(credentials, app);
+const server = http.createServer(app);
 
 const io = socketIO(server);
 io.set('origins', '*:*');
