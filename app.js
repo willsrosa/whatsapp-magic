@@ -14,15 +14,23 @@ const axios = require('axios');
 const port = 2096;
 
 //sudo openssl genrsa -aes128 -out private.key 2048
-//sudo openssl req -new -days 365 -key private.key -out private.csr
+//sudo openssl req -new -days 365 -key private.key -out private.crt
 //sudo chmod 700 ~/whatsapp-magic/
-    var privateKey = fs.readFileSync('private.key', 'utf8');
-    var certificate = fs.readFileSync('private.crt', 'utf8');
-    var credentials = { key: privateKey, cert: certificate };
+//sudo chmod -R 777 whatsapp-magic/private.key
+//openssl req -newkey rsa:4096 \
+//            -x509 \
+//            -sha256 \
+//            -days 3650 \
+//            -nodes \
+//            -out private.crt \
+//            -keyout private.key
+    // var privateKey = fs.readFileSync('private.key', 'utf8');
+    // var certificate = fs.readFileSync('private.crt', 'utf8');
+    // var credentials = { key: privateKey, cert: certificate };
 
 const app = express();
-const server = https.createServer(credentials, app);
-//const server = http.createServer(app);
+//const server = https.createServer(credentials, app);
+const server = http.createServer(app);
 
 const io = socketIO(server);
 io.set('origins', '*:*');
@@ -80,11 +88,11 @@ app.post('/send-pdf', async (req, res) => {
   const number = phoneNumberFormatter("55" + req.body.number);
   const message = req.body.message;
 
-  // console.log(message)
+   console.log(message)
   // const client = sessions.find(sess => sess.id == sender).client;
 
   const image = await new MessageMedia("application/pdf", message, "documento.pdf");
-  client.sendMessage(number, image).then(response => {
+  client.sendMessage(number, image, {caption: "Portal Magic Games"}).then(response => {
     console.log(response)
     res.status(200).json({
       status: true,
